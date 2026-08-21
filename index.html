@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THEHUNK. - Premium Streetwear</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Viewport for Animated Background */
+        .fullscreen-viewport {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.65) contrast(1.1);
+            transform-origin: center center;
+            transition: filter 0.5s ease;
+        }
+
+        .overlay-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(5,5,5,0.95) 100%);
+            pointer-events: none;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            background: rgba(5, 5, 5, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff5e00;
+        }
+
+        .btn-buy {
+            background: #ff5e00;
+            color: #000;
+            padding: 12px 28px;
+            font-weight: 900;
+            border-radius: 4px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            box-shadow: 0 0 25px rgba(255, 94, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(255, 94, 0, 0.7);
+        }
+
+        /* Scroll Area */
+        .scroll-container {
+            position: relative;
+            z-index: 2;
+            height: 400vh;
+        }
+
+        .scroll-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 10px 40px rgba(0,0,0,0.9);
+            opacity: 0;
+            transform: translateY(50px);
+            max-width: 900px;
+            line-height: 1.1;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            letter-spacing: 6px;
+            color: #ff5e00;
+            margin-top: 25px;
+            opacity: 0;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Product Catalog Section */
+        .content-section {
+            position: relative;
+            z-index: 10;
+            background: #080808;
+            padding: 120px 60px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            letter-spacing: 6px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: #ff5e00;
+            letter-spacing: 3px;
+            font-size: 1rem;
+        }
+
+        .product-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: border 0.3s, transform 0.3s;
+        }
+
+        .product-card:hover {
+            border-color: rgba(255, 94, 0, 0.5);
+            transform: translateY(-8px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .product-card h3 {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            color: #ff5e00;
+            font-weight: 900;
+            font-size: 1.4rem;
+        }
+
+        footer {
+            background: #030303;
+            padding: 60px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #555;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">THEHUNK.</div>
+        <div class="nav-links">
+            <a href="#catalog">COLLECTION</a>
+            <a href="#catalog" class="btn-buy">SHOP DROP 01</a>
+        </div>
+    </nav>
+
+    <!-- Background Animated Viewport -->
+    <div class="fullscreen-viewport">
+        <img id="mainBg" class="bg-image" src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=2000&auto=format&fit=crop" alt="Hero Clothing View">
+        <div class="overlay-vignette"></div>
+    </div>
+
+    <!-- Scrollytelling Triggers -->
+    <div class="scroll-container">
+        <div class="scroll-section">
+            <h1 class="hero-title" id="t1">THE FUTURE OF STREETWEAR</h1>
+            <p class="hero-sub" id="s1">240 GSM HEAVYWEIGHT COTTON</p>
+        </div>
+
+        <div class="scroll-section">
+            <h1 class="hero-title" id="t2" style="color: #ff5e00;">PRECISION CRAFTED FABRIC</h1>
+            <p class="hero-sub" id="s2" style="color: #fff;">LIMITED TO 100 PIECES WORLDWIDE</p>
+        </div>
+
+        <div class="scroll-section">
+            <h1 class="hero-title" id="t3">DROP 01 LIVE NOW</h1>
+            <p class="hero-sub" id="s3">SCROLL DOWN TO EXPLORE THE CATALOG</p>
+        </div>
+    </div>
+
+    <!-- Catalog Showcase -->
+    <div class="content-section" id="catalog">
+        <div class="section-header">
+            <h2>THE COLLECTION</h2>
+            <p>LIMITED EDITION RELEASE // DROP 01</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1000&auto=format&fit=crop" alt="Cyber Orange Tee">
+                <h3>CYBER ORANGE TEE</h3>
+                <p>Heavyweight 240 GSM cotton tee featuring custom screen-printed graphics and tailored boxy fit.</p>
+                <div class="price-row">
+                    <span class="price">₹1,299</span>
+                    <a href="#" class="btn-buy" style="padding: 8px 18px; font-size: 0.8rem;">BUY NOW</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=1000&auto=format&fit=crop" alt="Acid Wash Tee">
+                <h3>VINTAGE ACID WASH</h3>
+                <p>Hand-washed vintage black texture with drop-shoulder cut and luxury embroidered branding.</p>
+                <div class="price-row">
+                    <span class="price">₹1,399</span>
+                    <a href="#" class="btn-buy" style="padding: 8px 18px; font-size: 0.8rem;">BUY NOW</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1000&auto=format&fit=crop" alt="Minimalist Hoodie">
+                <h3>OVERSIZED HOODIE</h3>
+                <p>Ultra-dense 400 GSM fleece hoodie with minimal typography and high-density chest badge.</p>
+                <div class="price-row">
+                    <span class="price">₹2,499</span>
+                    <a href="#" class="btn-buy" style="padding: 8px 18px; font-size: 0.8rem;">BUY NOW</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 THEHUNK. STREETWEAR BRAND. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- GSAP Animations Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".scroll-container",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.5
+            }
+        });
+
+        // Step 1: Initial Zoom
+        tl.to("#mainBg", { scale: 1.3, rotate: -2, duration: 3 })
+          .to("#t1", { opacity: 1, y: 0, duration: 1.5 }, "<")
+          .to("#s1", { opacity: 1, duration: 1.5 }, "<")
+          .to("#t1, #s1", { opacity: 0, y: -40, duration: 1 })
+
+        // Step 2: Pan & Zoom into details
+          .to("#mainBg", { scale: 1.6, x: "-6%", rotate: 2, duration: 3 })
+          .to("#t2", { opacity: 1, y: 0, duration: 1.5 }, "<")
+          .to("#s2", { opacity: 1, duration: 1.5 }, "<")
+          .to("#t2, #s2", { opacity: 0, y: -40, duration: 1 })
+
+        // Step 3: Zoom out for Catalog Section
+          .to("#mainBg", { scale: 1, x: "0%", rotate: 0, filter: "brightness(0.25)", duration: 3 })
+          .to("#t3", { opacity: 1, y: 0, duration: 1.5 }, "<")
+          .to("#s3", { opacity: 1, duration: 1.5 }, "<");
+    </script>
+</body>
+</html>
