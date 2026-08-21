@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THEHUNK. CLOTHING | Vintage & Surplus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #0f0f0f;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #333;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            color: #fff;
+        }
+
+        header p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-bottom: 1px solid #333;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin: 12px 0 5px;
+            color: #fff;
+        }
+
+        .product-meta {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00ff66;
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            display: inline-block;
+            background-color: #25D366;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .buy-btn:hover {
+            background-color: #1ebc57;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 5px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.8rem;
+            border-top: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>THEHUNK.</h1>
+        <p>VINTAGE SURPLUS UNISEX TEES & PANTS</p>
+    </header>
+
+    <div class="container">
+        <div class="product-grid">
+
+            <!-- Item 1 -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x300/111/fff?text=NIRVANA+TEE" alt="Tee">
+                <div class="product-title">Nirvana Vintage Graphic Tee</div>
+                <div class="product-meta">Size: L | Condition: 9/10</div>
+                <div class="price">₹699</div>
+                <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Nirvana%20Vintage%20Tee" class="buy-btn">Buy via WhatsApp</a>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x300/111/fff?text=ACDC+TEE" alt="Tee">
+                <div class="product-title">AC/DC Heavy Metal Oversized Tee</div>
+                <div class="product-meta">Size: XL | Condition: 10/10</div>
+                <div class="price">₹799</div>
+                <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20ACDC%20Tee" class="buy-btn">Buy via WhatsApp</a>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x300/111/fff?text=CARGO+PANTS" alt="Pants">
+                <div class="product-title">Vintage Faded Baggy Cargo</div>
+                <div class="product-meta">Waist: 32 | Condition: 8.5/10</div>
+                <div class="price">₹999</div>
+                <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Baggy%20Cargo" class="buy-btn">Buy via WhatsApp</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 THEHUNK. CLOTHING. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</body>
+</html>
