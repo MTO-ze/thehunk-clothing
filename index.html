@@ -3,152 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THEHUNK. CLOTHING | Vintage & Surplus</title>
+    <title>THEHUNK. | Vintage Surplus</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         body {
-            background-color: #0f0f0f;
-            color: #e0e0e0;
-            padding: 20px;
+            background-color: #050505;
+            color: #fff;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle, rgba(0,255,136,0.05) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         header {
             text-align: center;
-            padding: 30px 0;
-            border-bottom: 2px solid #333;
+            padding: 40px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            letter-spacing: 3px;
-            color: #fff;
+        .brand-title {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            animation: pulseGlow 3s infinite alternate;
         }
 
-        header p {
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 136, 0.2); }
+            100% { text-shadow: 0 0 25px rgba(0, 255, 136, 0.8); }
+        }
+
+        .tagline {
             color: #888;
-            font-size: 0.9rem;
-            margin-top: 5px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-top: 8px;
         }
 
+        /* Filter Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .filter-btn {
+            background: #111;
+            color: #888;
+            border: 1px solid #333;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            color: #00ff88;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+        }
+
+        /* Container & Grid */
         .container {
-            max-width: 1000px;
-            margin: 30px auto;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
         }
 
+        /* Card Animation & Design */
         .product-card {
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
             overflow: hidden;
-            text-align: center;
-            padding-bottom: 15px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .product-card img {
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(0, 255, 136, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 136, 0.15);
+        }
+
+        .image-box {
             width: 100%;
-            height: 280px;
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 1px solid #333;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .image-box img {
+            transform: scale(1.08);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #00ff88;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .details {
+            padding: 15px;
+            text-align: left;
         }
 
         .product-title {
-            font-size: 1.1rem;
-            margin: 12px 0 5px;
-            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .product-meta {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 8px;
+            font-size: 0.75rem;
+            color: #777;
+            margin-bottom: 12px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .price {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #00ff66;
-            margin-bottom: 15px;
+            color: #00ff88;
         }
 
         .buy-btn {
-            display: inline-block;
-            background-color: #25D366;
+            background: linear-gradient(45deg, #00ff88, #00b8ff);
             color: #000;
             text-decoration: none;
             font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
         .buy-btn:hover {
-            background-color: #1ebc57;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+            transform: scale(1.05);
         }
 
         footer {
             text-align: center;
-            margin-top: 5px;
-            padding: 20px;
-            color: #666;
-            font-size: 0.8rem;
-            border-top: 1px solid #222;
+            padding: 40px 0 20px;
+            color: #444;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>THEHUNK.</h1>
-        <p>VINTAGE SURPLUS UNISEX TEES & PANTS</p>
+        <div class="brand-title">THEHUNK.</div>
+        <div class="tagline">VINTAGE SURPLUS & STREETWEAR DROPS</div>
     </header>
+
+    <div class="controls">
+        <button class="filter-btn active">ALL DROPS</button>
+        <button class="filter-btn">TEES</button>
+        <button class="filter-btn">PANTS</button>
+    </div>
 
     <div class="container">
         <div class="product-grid">
 
-            <!-- Item 1 -->
+            <!-- Product Card 1 -->
             <div class="product-card">
-                <img src="https://via.placeholder.com/300x300/111/fff?text=NIRVANA+TEE" alt="Tee">
-                <div class="product-title">Nirvana Vintage Graphic Tee</div>
-                <div class="product-meta">Size: L | Condition: 9/10</div>
-                <div class="price">₹699</div>
-                <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Nirvana%20Vintage%20Tee" class="buy-btn">Buy via WhatsApp</a>
+                <div class="image-box">
+                    <span class="badge">LIMITED</span>
+                    <img src="IMG-20260808-WA0017.jpg" alt="Tee">
+                </div>
+                <div class="details">
+                    <div class="product-title">Nirvana Graphic Oversized Tee</div>
+                    <div class="product-meta">SIZE: L | CONDITION: 9/10</div>
+                    <div class="price-row">
+                        <div class="price">₹699</div>
+                        <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Nirvana%20Tee" class="buy-btn">BUY NOW</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Item 2 -->
+            <!-- Product Card 2 -->
             <div class="product-card">
-                <img src="https://via.placeholder.com/300x300/111/fff?text=ACDC+TEE" alt="Tee">
-                <div class="product-title">AC/DC Heavy Metal Oversized Tee</div>
-                <div class="product-meta">Size: XL | Condition: 10/10</div>
-                <div class="price">₹799</div>
-                <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20ACDC%20Tee" class="buy-btn">Buy via WhatsApp</a>
+                <div class="image-box">
+                    <span class="badge">NEW DROP</span>
+                    <img src="IMG-20260808-WA0018.jpg" alt="Tee">
+                </div>
+                <div class="details">
+                    <div class="product-title">AC/DC Heavy Metal Tee</div>
+                    <div class="product-meta">SIZE: XL | CONDITION: 10/10</div>
+                    <div class="price-row">
+                        <div class="price">₹799</div>
+                        <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20ACDC%20Tee" class="buy-btn">BUY NOW</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Item 3 -->
+            <!-- Product Card 3 -->
             <div class="product-card">
-                <img src="https://via.placeholder.com/300x300/111/fff?text=CARGO+PANTS" alt="Pants">
-                <div class="product-title">Vintage Faded Baggy Cargo</div>
-                <div class="product-meta">Waist: 32 | Condition: 8.5/10</div>
-                <div class="price">₹999</div>
-                <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Baggy%20Cargo" class="buy-btn">Buy via WhatsApp</a>
+                <div class="image-box">
+                    <span class="badge">RARE</span>
+                    <img src="IMG-20260808-WA0019.jpg" alt="Pants">
+                </div>
+                <div class="details">
+                    <div class="product-title">Vintage Faded Baggy Cargo</div>
+                    <div class="product-meta">WAIST: 32 | CONDITION: 8.5/10</div>
+                    <div class="price-row">
+                        <div class="price">₹999</div>
+                        <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Cargo%20Pants" class="buy-btn">BUY NOW</a>
+                    </div>
+                </div>
             </div>
 
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 THEHUNK. CLOTHING. ALL RIGHTS RESERVED.</p>
+        &copy; 2026 THEHUNK. CLOTHING. ALL RIGHTS RESERVED.
     </footer>
 
 </body>
