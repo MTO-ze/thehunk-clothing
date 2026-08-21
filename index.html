@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THEHUNK. | Cinematic Streetwear</title>
+    <!-- GSAP & ScrollTrigger for High-End Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Background */
+        .glow-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .cart-status {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        /* HERO SCROLL ANIMATION SECTION */
+        .hero-scroll-container {
+            position: relative;
+            height: 300vh; /* Long scroll effect */
+        }
+
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .main-tee-image {
+            width: 320px;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.2);
+            z-index: 2;
+            transition: transform 0.1s linear;
+        }
+
+        .scroll-text {
+            position: absolute;
+            z-index: 3;
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0;
+            pointer-events: none;
+            width: 80%;
+            text-align: center;
+        }
+
+        .text-1 { color: #fff; }
+        .text-2 { color: #00ff88; text-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
+        .text-3 { color: #fff; }
+
+        /* PRODUCT CATALOG SECTION */
+        .catalog-section {
+            position: relative;
+            z-index: 10;
+            background: #050505;
+            padding: 100px 20px;
+            min-height: 100vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            letter-spacing: 4px;
+            color: #00ff88;
+        }
+
+        .grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #00ff88;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .card-meta {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #00ff88;
+        }
+
+        .buy-btn {
+            background: #00ff88;
+            color: #000;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-weight: 900;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 15px #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .scroll-text { font-size: 1.8rem; }
+            .main-tee-image { width: 240px; height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-bg"></div>
+
+    <nav>
+        <div class="logo">THEHUNK.</div>
+        <div class="cart-status">DROP 01 // VINTAGE</div>
+    </nav>
+
+    <!-- Scroll Animated Hero Section -->
+    <div class="hero-scroll-container">
+        <div class="sticky-wrapper">
+            <!-- Central Animated Image -->
+            <img src="IMG-20260808-WA0017.jpg" alt="Featured Tee" class="main-tee-image" id="heroTee">
+
+            <!-- Animated Texts overlapping on scroll -->
+            <div class="scroll-text text-1" id="text1">240 GSM HEAVYWEIGHT COTTON</div>
+            <div class="scroll-text text-2" id="text2">VINTAGE WASHED & OVERSIZED FIT</div>
+            <div class="scroll-text text-3" id="text3">THE HUNK. EXCLUSIVE DROP</div>
+        </div>
+    </div>
+
+    <!-- Product Catalog Section -->
+    <div class="catalog-section">
+        <h2 class="section-title">LATEST DROPS</h2>
+        
+        <div class="grid">
+            <!-- Product 1 -->
+            <div class="card">
+                <img src="IMG-20260808-WA0017.jpg" alt="Product">
+                <div class="card-title">Nirvana Graphic Oversized Tee</div>
+                <div class="card-meta">SIZE: L | 240 GSM | VINTAGE BLACK</div>
+                <div class="card-footer">
+                    <div class="price">₹699</div>
+                    <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Nirvana%20Tee" class="buy-btn">BUY NOW</a>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="card">
+                <img src="IMG-20260808-WA0018.jpg" alt="Product">
+                <div class="card-title">AC/DC Heavy Metal Tee</div>
+                <div class="card-meta">SIZE: XL | 240 GSM | WASHED GREY</div>
+                <div class="card-footer">
+                    <div class="price">₹799</div>
+                    <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20ACDC%20Tee" class="buy-btn">BUY NOW</a>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="card">
+                <img src="IMG-20260808-WA0019.jpg" alt="Product">
+                <div class="card-title">Vintage Faded Baggy Cargo</div>
+                <div class="card-meta">WAIST: 32 | HEAVY DENIM</div>
+                <div class="card-footer">
+                    <div class="price">₹999</div>
+                    <a href="https://wa.me/910000000000?text=Hi,%20I%20want%20to%20buy%20Cargo%20Pants" class="buy-btn">BUY NOW</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 THEHUNK. CLOTHING. HIGH-END STREETWEAR.
+    </footer>
+
+    <!-- GSAP Animation Script -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scroll Timeline
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".hero-scroll-container",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1
+            }
+        });
+
+        // Step 1: Scale Image and Show Text 1
+        tl.to("#heroTee", { scale: 1.2, rotation: -3, duration: 2 })
+          .to("#text1", { opacity: 1, y: -20, duration: 2 }, "<")
+          .to("#text1", { opacity: 0, y: -50, duration: 2 })
+          
+        // Step 2: Rotate Image Other Way and Show Text 2
+          .to("#heroTee", { scale: 1.5, rotation: 3, duration: 2 })
+          .to("#text2", { opacity: 1, duration: 2 }, "<")
+          .to("#text2", { opacity: 0, duration: 2 })
+
+        // Step 3: Zoom In Image & Final Reveal Text 3
+          .to("#heroTee", { scale: 1.8, rotation: 0, opacity: 0.3, duration: 2 })
+          .to("#text3", { opacity: 1, scale: 1.1, duration: 2 }, "<");
+    </script>
+</body>
+</html>
